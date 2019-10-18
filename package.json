@@ -1,6 +1,6 @@
 {
   "name": "vue-simple-alert",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simplest but beautiful alert(), confirm(), prompt() for Vue.js, using sweetalert2.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,5 +33,8 @@
   "bugs": {
     "url": "https://github.com/constkhi/vue-simple-alert/issues"
   },
-  "homepage": "https://github.com/constkhi/vue-simple-alert#readme"
+  "homepage": "https://github.com/constkhi/vue-simple-alert#readme",
+  "files": [
+    "/dist"
+  ]
 }
