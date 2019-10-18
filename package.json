@@ -1,0 +1,37 @@
+{
+  "name": "vue-simple-alert",
+  "version": "1.0.0",
+  "description": "A simplest but beautiful alert(), confirm(), prompt() for Vue.js, using sweetalert2.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "sweetalert2": "^8.18.4",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/constkhi/vue-simple-alert.git"
+  },
+  "keywords": [
+    "alert",
+    "confirm",
+    "prompt",
+    "dialog",
+    "simple",
+    "sweetalert2",
+    "vue"
+  ],
+  "author": "constkhi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/constkhi/vue-simple-alert/issues"
+  },
+  "homepage": "https://github.com/constkhi/vue-simple-alert#readme"
+}
