@@ -4,8 +4,9 @@ module.exports = {
 
   configureWebpack: {
     optimization: {
-      splitChunks: false
+      //splitChunks: false
     }
   },
-  filenameHashing: false
+  filenameHashing: false,
+  chainWebpack: config => config.resolve.symlinks(false)
 };

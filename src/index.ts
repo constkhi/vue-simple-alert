@@ -1,4 +1,4 @@
-import { VueConstructor } from "vue";
+import Vue from "vue";
 import Swal, {
   SweetAlertOptions,
   SweetAlertResult,
@@ -7,14 +7,14 @@ import Swal, {
 
 declare module "vue/types/vue" {
   interface Vue {
-    readonly prototype: Vue;
+    readonly prototype: typeof Vue;
     $alert: typeof VueSimpleAlert.alert;
     $confirm: typeof VueSimpleAlert.confirm;
     $prompt: typeof VueSimpleAlert.prompt;
     $fire: typeof VueSimpleAlert.fire;
   }
 
-  interface VueConstructor<V extends Vue = Vue> {
+  interface VueConstructor {
     alert: typeof VueSimpleAlert.alert;
     confirm: typeof VueSimpleAlert.confirm;
     prompt: typeof VueSimpleAlert.prompt;
@@ -22,36 +22,45 @@ declare module "vue/types/vue" {
   }
 }
 
-class VueSimpleAlert {
-  static alert(message?: string, title?: string, type?: SweetAlertType): void {
-    const options: SweetAlertOptions = {
-      title: title,
-      text: message,
-      type: type,
-      allowOutsideClick: false
-    };
+export class VueSimpleAlert {
+  static alert(message?: string, title?: string, type?: SweetAlertType): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const options: SweetAlertOptions = {
+        title: title,
+        text: message,
+        type: type
+      };
 
-    Swal.fire(options)
-      .then((r: SweetAlertResult) => {
-        // Closed by OK button
-      })
-      .catch(() => {
-        // Closed by other than OK button (ESC, Backdrop...)
-      });
+      Swal.fire(options)
+        .then((r: SweetAlertResult) => {
+          if (r.value === true) {
+            // Closed by OK button
+            resolve(true);
+          } else reject();
+        })
+        .catch(() => {
+          // Closed by other than OK button (ESC, Backdrop...)
+          reject()
+        });
+    });
+
   }
 
   static confirm(
     message?: string,
     title?: string,
-    type?: SweetAlertType
+    type?: SweetAlertType,
+    reverseButtons?: boolean
   ): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const options: SweetAlertOptions = {
-        title: title,
+        title,
         text: message,
-        type: type,
+        type,
+        reverseButtons,
         showCancelButton: true,
-        allowOutsideClick: false
+        allowOutsideClick: false,
+        keydownListenerCapture: true
       };
 
       Swal.fire(options)
@@ -66,25 +75,27 @@ class VueSimpleAlert {
   }
 
   static prompt(
-    message?: string,
-    default_text?: string,
+    message: string,
+    defaultText?: string,
     title?: string,
-    type?: SweetAlertType
+    type?: SweetAlertType,
+    reverseButtons?: boolean
   ): Promise<string> {
     return new Promise((resolve, reject) => {
       const options: SweetAlertOptions = {
         text: message,
-        inputValue: default_text,
-        title: title,
-        type: type,
+        inputValue: defaultText,
+        title,
+        type,
+        reverseButtons,
         input: "text",
         showCancelButton: true,
-        allowOutsideClick: false
+        allowOutsideClick: false,
+        keydownListenerCapture: true
       };
 
       Swal.fire(options)
         .then(r => {
-          console.log(r);
           return resolve(r.value);
         })
         .catch(() => {
@@ -97,7 +108,7 @@ class VueSimpleAlert {
     return Swal.fire(options);
   }
 
-  static install(vue: VueConstructor): void {
+  static install(vue: typeof Vue): void {
     vue["alert"] = VueSimpleAlert.alert;
     vue["confirm"] = VueSimpleAlert.confirm;
     vue["prompt"] = VueSimpleAlert.prompt;

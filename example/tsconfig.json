@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es5",
+    "module": "es2015",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "types": [
       "webpack-env"
     ],
@@ -20,6 +21,8 @@
       ]
     },
     "lib": [
+      "es5",
+      "es2015",
       "esnext",
       "dom",
       "dom.iterable",
@@ -34,6 +37,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
+    ".history",
     "node_modules"
   ]
 }
