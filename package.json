@@ -1,7 +1,7 @@
 {
   "name": "vue-simple-alert",
-  "version": "1.0.2",
-  "description": "Simple but cool alert(), confirm(), prompt() for Vue.js.",
+  "version": "1.1.1",
+  "description": "Simple alert(), confirm(), prompt() for Vue.js, using sweetalert2.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "scripts": {
@@ -15,6 +15,12 @@
     "vue": "2.x"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "2.6.0",
+    "@typescript-eslint/parser": "2.6.0",
+    "eslint": "6.6.0",
+    "eslint-config-prettier": "6.5.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "prettier": "1.18.2",
     "typescript": "^3.6.4"
   },
   "repository": {

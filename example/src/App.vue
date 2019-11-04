@@ -1,77 +1,132 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <h1>
-      vue-simple-alert examples
-      <small>({{ v }})</small>
-    </h1>
-    <br />
+    <header id="header">
+      <img id="logo" alt="Vue logo" src="./assets/logo.png" />
+      <h1>
+        vue-simple-alert examples
+        <small>({{ v }})</small>
+      </h1>
+    </header>
     <h2>Alert examples</h2>
     <div id="examples">
       <div id="alert-example">
-        <button @click="alertExample0" type="button">Normal Alert</button>
-        <button @click="alertExample1" type="button" class="swal2-confirm swal2-styled">Simple</button>
-        <button @click="alertExample2" type="button" class="swal2-confirm swal2-styled">With title</button>
-        <button @click="alertExample3" type="button" class="swal2-confirm swal2-styled">Success icon</button>
-        <button @click="alertExample4" type="button" class="swal2-confirm swal2-styled">Warning icon</button>
+        <button type="button" @click="alertExample0">Normal Alert</button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="alertExample1"
+        >
+          Simple
+        </button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="alertExample2"
+        >
+          With title
+        </button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="alertExample3"
+        >
+          Success icon
+        </button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="alertExample4"
+        >
+          Warning icon
+        </button>
       </div>
 
       <br />
       <h2>Confirm examples</h2>
       <div id="confirm-example">
-        <button @click="confirmExample0" type="button">Normal Confirm</button>
-        <button @click="confirmExample1" type="button" class="swal2-confirm swal2-styled">Simple</button>
+        <button type="button" @click="confirmExample0">Normal Confirm</button>
         <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="confirmExample1"
+        >
+          Simple
+        </button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
           @click="confirmExample2"
-          type="button"
-          class="swal2-confirm swal2-styled"
-        >Question icon</button>
-        <button @click="confirmExample3" type="button" class="swal2-confirm swal2-styled">Error icon</button>
+        >
+          Question icon
+        </button>
         <button
-          @click="confirmExample4"
           type="button"
           class="swal2-confirm swal2-styled"
-        >Reverse buttons</button>
+          @click="confirmExample3"
+        >
+          Error icon
+        </button>
       </div>
 
       <br />
       <h2>Prompt examples</h2>
       <div id="prompt-example">
-        <button @click="promptExample0" type="button">Normal Prompt</button>
+        <button type="button" @click="promptExample0">Normal Prompt</button>
         <button
+          type="button"
+          class="swal2-confirm swal2-styled"
           @click="promptExample1"
+        >
+          Simple Prompt
+        </button>
+        <button
           type="button"
           class="swal2-confirm swal2-styled"
-        >Simple Prompt</button>
-        <button
           @click="promptExample2"
-          type="button"
-          class="swal2-confirm swal2-styled"
-        >Question icon</button>
+        >
+          Question icon
+        </button>
         <button
-          @click="promptExample3"
           type="button"
           class="swal2-confirm swal2-styled"
-        >Reverse buttons</button>
+          @click="promptExample3"
+        >
+          Prompt email
+        </button>
       </div>
 
       <br />
       <h2>Advanced examples</h2>
       <div id="advanced-example">
         <button
-          @click="advancedExample"
           type="button"
           class="swal2-confirm swal2-styled"
-        >Advanced Example</button>
+          @click="advancedExample1"
+        >
+          Animation
+        </button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="advancedExample2"
+        >
+          Custom button text
+        </button>
+        <button
+          type="button"
+          class="swal2-confirm swal2-styled"
+          @click="advancedExample3"
+        >
+          Reverse buttons
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
-import { SweetAlertOptions } from "sweetalert2";
+import { Vue, Component } from "vue-property-decorator";
+import { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
 import { version } from "vue-simple-alert/package.json";
 
 @Component
@@ -82,32 +137,28 @@ export default class App extends Vue {
     window.alert("This is normal alert.");
   }
   alertExample1() {
-    this.$alert("This is simple but cool alert.")
-      .then(() => console.log("Closed by OK"))
-      .catch(() => console.log("dismissed"));
+    this.$alert("This is simple but cool alert.").then(() =>
+      console.log("Closed")
+    );
   }
   alertExample2() {
-    this.$alert("This is simple but cool alert with title.", "Example")
-      .then(() => console.log("Closed by OK"))
-      .catch(() => console.log("dismissed"));
+    this.$alert("This is simple but cool alert with title.", "Example").then(
+      () => console.log("Closed")
+    );
   }
   alertExample3() {
     this.$alert(
       "This is simple but cool alert with icon.",
       "Success",
       "success"
-    )
-      .then(() => console.log("Closed by OK"))
-      .catch(() => console.log("dismissed"));
+    ).then(() => console.log("Closed"));
   }
   alertExample4() {
     this.$alert(
       "This is simple but cool alert with icon.",
       "Warning",
       "warning"
-    )
-      .then(() => console.log("Closed by OK"))
-      .catch(() => console.log("dismissed"));
+    ).then(() => console.log("Closed"));
   }
 
   confirmExample0() {
@@ -122,7 +173,7 @@ export default class App extends Vue {
       "Question",
       "question"
     )
-      .then(r => {
+      .then((r: boolean) => {
         console.log(r);
       })
       .catch(() => {
@@ -131,22 +182,7 @@ export default class App extends Vue {
   }
   confirmExample3() {
     this.$confirm("This is cool confirm with error icon.", "Error", "error")
-      .then(r => {
-        console.log(r);
-        this.$alert("OK selected.");
-      })
-      .catch(() => {
-        console.log("OK not selected.");
-      });
-  }
-  confirmExample4() {
-    this.$confirm(
-      "This is dialog has reversed buttons.",
-      "Error",
-      "error",
-      true
-    )
-      .then(r => {
+      .then((r: boolean) => {
         console.log(r);
         this.$alert("OK selected.");
       })
@@ -159,32 +195,32 @@ export default class App extends Vue {
     window.alert(window.prompt("Input your name", "John Doe"));
   }
   promptExample1() {
-    this.$prompt("Input your name", "John Doe")
-      .then(r => {
-        if (r) this.$alert(r, "Your name is:", "success");
-      })
-      .catch(() => console.log("closed"));
-  }
-  promptExample2() {
-    this.$prompt("Input your name", "John Doe", "Example", "question").then(
-      r => {
-        if (r) this.$alert(r, "Your name is:", "success");
-      }
-    );
-  }
-  promptExample3() {
-    this.$prompt(
-      "Input your name",
-      "John Doe",
-      "Example",
-      "question",
-      true
-    ).then(r => {
+    this.$prompt("Input your name", "John Doe").then((r: string) => {
       if (r) this.$alert(r, "Your name is:", "success");
     });
   }
+  promptExample2() {
+    this.$prompt("Input your name", "John Doe", "Example", "question")
+      .then((r: string) => {
+        this.$alert(r, "Your name is:", "success");
+      })
+      .catch(() => console.log("canceled"));
+  }
+  promptExample3() {
+    this.$prompt(
+      "Input your email",
+      "someone@example.com",
+      "Example",
+      "question",
+      { input: "email" }
+    )
+      .then((r: string) => {
+        this.$alert(r, "Your email is:", "success");
+      })
+      .catch(() => console.log("canceled"));
+  }
 
-  advancedExample() {
+  advancedExample1() {
     const options: SweetAlertOptions = {
       title: "<strong>Advanced</strong> &nbsp; example",
       text: "This dialog will be closed after 3 seconds.",
@@ -209,20 +245,79 @@ export default class App extends Vue {
       `
     };
 
-    this.$fire(options).then(r => {
+    this.$fire(options).then((r: SweetAlertResult) => {
       if (r.value) this.$alert(r.value, "Result");
     });
+  }
+  advancedExample2() {
+    this.$alert(
+      "This is advanced alert with custom button text",
+      "Example",
+      "success",
+      {
+        confirmButtonText: "Got it!"
+      }
+    );
+  }
+  advancedExample3() {
+    this.$confirm("This is dialog has reversed buttons.", "Error", "error", {
+      reverseButtons: true
+    })
+      .then((r: boolean) => {
+        console.log(r);
+      })
+      .catch(() => {
+        console.log("OK not selected.");
+      });
   }
 }
 </script>
 
 <style>
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-image: linear-gradient(
+    to left bottom,
+    rgb(179, 215, 255) 0%,
+    rgb(179, 255, 236) 100%
+  );
+  background-position: initial initial;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Dosis", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 20px;
+}
+
+#header {
+  display: flex;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  justify-content: center;
+}
+
+#logo {
+  height: 100px;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 3em;
+}
+h1 small {
+  font-size: 0.5em;
+}
+
+h2 {
+  font-weight: 500;
+  margin: 0 0 10px;
 }
 </style>

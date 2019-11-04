@@ -1,69 +1,55 @@
-import Vue from "vue";
+import _Vue from "vue";
 import Swal, {
   SweetAlertOptions,
   SweetAlertResult,
   SweetAlertType
 } from "sweetalert2";
 
-declare module "vue/types/vue" {
-  interface Vue {
-    readonly prototype: typeof Vue;
-    $alert: typeof VueSimpleAlert.alert;
-    $confirm: typeof VueSimpleAlert.confirm;
-    $prompt: typeof VueSimpleAlert.prompt;
-    $fire: typeof VueSimpleAlert.fire;
-  }
-
-  interface VueConstructor {
-    alert: typeof VueSimpleAlert.alert;
-    confirm: typeof VueSimpleAlert.confirm;
-    prompt: typeof VueSimpleAlert.prompt;
-    fire: typeof VueSimpleAlert.fire;
-  }
-}
-
 export class VueSimpleAlert {
-  static alert(message?: string, title?: string, type?: SweetAlertType): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      const options: SweetAlertOptions = {
-        title: title,
-        text: message,
-        type: type
-      };
+  static globalOptions: SweetAlertOptions;
 
-      Swal.fire(options)
-        .then((r: SweetAlertResult) => {
-          if (r.value === true) {
-            // Closed by OK button
-            resolve(true);
-          } else reject();
+  static alert(
+    message?: string,
+    title?: string,
+    type?: SweetAlertType,
+    options?: SweetAlertOptions
+  ): Promise<boolean> {
+    return new Promise(resolve => {
+      const mixedOptions: SweetAlertOptions = {
+        ...VueSimpleAlert.globalOptions,
+        ...options
+      };
+      mixedOptions.title = title || mixedOptions.title;
+      mixedOptions.text = message || mixedOptions.text;
+      mixedOptions.type = type || mixedOptions.type;
+
+      Swal.fire(mixedOptions)
+        .then(() => {
+          resolve(true);
         })
         .catch(() => {
-          // Closed by other than OK button (ESC, Backdrop...)
-          reject()
+          resolve(true);
         });
     });
-
   }
 
   static confirm(
     message?: string,
     title?: string,
     type?: SweetAlertType,
-    reverseButtons?: boolean
+    options?: SweetAlertOptions
   ): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      const options: SweetAlertOptions = {
-        title,
-        text: message,
-        type,
-        reverseButtons,
-        showCancelButton: true,
-        allowOutsideClick: false,
-        keydownListenerCapture: true
+      const mixedOptions: SweetAlertOptions = {
+        ...VueSimpleAlert.globalOptions,
+        ...options
       };
+      mixedOptions.title = title || mixedOptions.title;
+      mixedOptions.text = message || mixedOptions.text;
+      mixedOptions.type = type || mixedOptions.type;
+      mixedOptions.showCancelButton = true;
 
-      Swal.fire(options)
+      Swal.fire(mixedOptions)
         .then((r: SweetAlertResult) => {
           if (r.value === true) {
             // Closed by OK button
@@ -79,24 +65,26 @@ export class VueSimpleAlert {
     defaultText?: string,
     title?: string,
     type?: SweetAlertType,
-    reverseButtons?: boolean
+    options?: SweetAlertOptions
   ): Promise<string> {
     return new Promise((resolve, reject) => {
-      const options: SweetAlertOptions = {
-        text: message,
-        inputValue: defaultText,
-        title,
-        type,
-        reverseButtons,
-        input: "text",
-        showCancelButton: true,
-        allowOutsideClick: false,
-        keydownListenerCapture: true
+      const mixedOptions: SweetAlertOptions = {
+        ...VueSimpleAlert.globalOptions,
+        ...options
       };
+      mixedOptions.title = title || mixedOptions.title;
+      mixedOptions.inputValue = defaultText;
+      mixedOptions.text = message || mixedOptions.text;
+      mixedOptions.type = type || mixedOptions.type;
+      mixedOptions.showCancelButton = true;
+      mixedOptions.input = mixedOptions.input || "text";
 
-      Swal.fire(options)
+      Swal.fire(mixedOptions)
         .then(r => {
-          return resolve(r.value);
+          if (r.value) {
+            // Closed by OK button
+            resolve(r.value);
+          } else reject();
         })
         .catch(() => {
           return reject();
@@ -108,24 +96,44 @@ export class VueSimpleAlert {
     return Swal.fire(options);
   }
 
-  static install(vue: typeof Vue): void {
-    vue["alert"] = VueSimpleAlert.alert;
-    vue["confirm"] = VueSimpleAlert.confirm;
-    vue["prompt"] = VueSimpleAlert.prompt;
-    vue["fire"] = VueSimpleAlert.fire;
+  static install(Vue: typeof _Vue, options: SweetAlertOptions): void {
+    VueSimpleAlert.globalOptions = options;
 
-    if (!vue.prototype.hasOwnProperty("$alert")) {
-      vue.prototype.$alert = VueSimpleAlert.alert;
+    // Global properties
+    Vue.alert = VueSimpleAlert.alert;
+    Vue.confirm = VueSimpleAlert.confirm;
+    Vue.prompt = VueSimpleAlert.prompt;
+    Vue.fire = VueSimpleAlert.fire;
+
+    // Instance properties
+    if (!Vue.prototype.hasOwnProperty("$alert")) {
+      Vue.prototype.$alert = VueSimpleAlert.alert;
     }
-    if (!vue.prototype.hasOwnProperty("$confirm")) {
-      vue.prototype.$confirm = VueSimpleAlert.confirm;
+    if (!Vue.prototype.hasOwnProperty("$confirm")) {
+      Vue.prototype.$confirm = VueSimpleAlert.confirm;
     }
-    if (!vue.prototype.hasOwnProperty("$prompt")) {
-      vue.prototype.$prompt = VueSimpleAlert.prompt;
+    if (!Vue.prototype.hasOwnProperty("$prompt")) {
+      Vue.prototype.$prompt = VueSimpleAlert.prompt;
     }
-    if (!vue.prototype.hasOwnProperty("$fire")) {
-      vue.prototype.$fire = VueSimpleAlert.fire;
+    if (!Vue.prototype.hasOwnProperty("$fire")) {
+      Vue.prototype.$fire = VueSimpleAlert.fire;
     }
+  }
+}
+
+declare module "vue/types/vue" {
+  interface Vue {
+    $alert: typeof VueSimpleAlert.alert;
+    $confirm: typeof VueSimpleAlert.confirm;
+    $prompt: typeof VueSimpleAlert.prompt;
+    $fire: typeof VueSimpleAlert.fire;
+  }
+
+  interface VueConstructor {
+    alert: typeof VueSimpleAlert.alert;
+    confirm: typeof VueSimpleAlert.confirm;
+    prompt: typeof VueSimpleAlert.prompt;
+    fire: typeof VueSimpleAlert.fire;
   }
 }
 

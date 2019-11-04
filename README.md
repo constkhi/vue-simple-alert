@@ -1,10 +1,15 @@
 # Vue Simple Alert
 
-![downloads](https://img.shields.io/npm/dw/vue-simple-alert)
-![version](https://img.shields.io/npm/v/vue-simple-alert)
-![license](https://img.shields.io/npm/l/vue-simple-alert)
+![screenshot](./example/src/assets/screenshot.gif)
 
-Simple but cool _**alert()**_, _**confirm()**_, _**prompt()**_ for Vue.js.
+[![version](https://img.shields.io/npm/v/vue-simple-alert)](https://www.npmjs.com/package/vue-simple-alert)
+[![Vue.js version](https://badgen.net/badge/vue.js/2.x/4fc08d)](https://vuejs.org)
+[![total downloads](https://img.shields.io/npm/dt/vue-simple-alert)](https://www.npmjs.com/package/vue-simple-alert)
+[![downloads](https://img.shields.io/npm/dw/vue-simple-alert)](https://www.npmjs.com/package/vue-simple-alert)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/97f03b2ea96049fbaff5591a94a7d0aa)](https://www.codacy.com/manual/constkhi/vue-simple-alert?utm_source=github.com&utm_medium=referral&utm_content=constkhi/vue-simple-alert&utm_campaign=Badge_Grade)
+[![license](https://img.shields.io/npm/l/vue-simple-alert)](LICENSE)
+
+Simple _**alert()**_, _**confirm()**_, _**prompt()**_ for Vue.js, using sweetalert2.
 
 ## Demo
 
@@ -33,7 +38,7 @@ npm i vue-simple-alert
 
 ```javascript
 // main.js
-import Vue from "vue"
+import Vue from "vue";
 import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSimpleAlert);
@@ -62,14 +67,28 @@ this.$confirm("Are you sure?").then(() => {
 ```javascript
 // in any component
 
-this.$prompt("Input your name").then((text) => {
+this.$prompt("Input your name").then(text => {
   // do somthing with text
 });
 ```
 
 ## Advanced Usage
 
-You can use sweetalert2's _**fire()**_ method through _**$fire()**_.
+### Global options
+
+Global options can be set when initialize plugin. Refer to [sweetalert2 documentation](https://sweetalert2.github.io/#configuration)
+
+```javascript
+// main.js
+import Vue from "vue";
+import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueSimpleAlert, { reverseButtons: true });
+```
+
+### More advanced usage
+
+You can use sweetalert2's _**fire()**_ method through _**\$fire()**_.
 For detailed usage, refer to [sweetalert2](https://sweetalert2.github.io) documentation.
 
 ```javascript
@@ -81,13 +100,13 @@ this.$fire({
   type: "success",
   timer: 3000
 }).then(r => {
- console.log(r.value);
+  console.log(r.value);
 });
 ```
 
 ## API
 
-### alert(message?, title?, type?)
+### alert(message?, title?, type?, options?)
 
 The _alert()_ method displays an alert box with a specified message and an OK button.
 
@@ -103,11 +122,15 @@ The _alert()_ method displays an alert box with a specified message and an OK bu
 
 > Optional. Specifies icon type.
 
+- options: SweetAlertOptions
+
+> Optional. Advanced options. Refer to [sweetalert2 documentation](https://sweetalert2.github.io/#configuration).
+
 - returns: Promise\<boolean\>
 
-> Will be resolved when OK button clicked. If alert box closed by any other reason, this promise will be rejected.
+> Will be resolved with true when alert box closed.
 
-### confirm(message?, title?, type?, reverseButton?)
+### confirm(message?, title?, type?, options?)
 
 The confirm() method displays a dialog box with a specified message, along with an OK and a Cancel button.
 
@@ -123,15 +146,15 @@ The confirm() method displays a dialog box with a specified message, along with 
 
 > Optional. Specifies icon type.
 
-- reverseButton: boolean
+- options: SweetAlertOptions
 
-> Optional. Set to true if you want to invert default buttons positions.
+> Optional. Advanced options. Refer to [sweetalert2 documentation](https://sweetalert2.github.io/#configuration).
 
 - returns: Promise\<boolean\>
 
 > Will be resolved when OK button clicked. If confirm box closed by any other reason, this promise will be rejected.
 
-### prompt(message, defaultText?, title?, type?, reverseButton?)
+### prompt(message, defaultText?, title?, type?, options?)
 
 The prompt() method displays a dialog box that prompts the user for input.
 
@@ -151,9 +174,9 @@ The prompt() method displays a dialog box that prompts the user for input.
 
 > Optional. Specifies icon type.
 
-- reverseButton: boolean
+- options: SweetAlertOptions
 
-> Optional. Set to true if you want to invert default buttons positions.
+> Optional. Advanced options. Refer to [sweetalert2 documentation](https://sweetalert2.github.io/#configuration).
 
 - returns: Promise\<string\>
 
