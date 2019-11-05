@@ -12,7 +12,8 @@
     "serve": "11.2.0",
     "vue": "^2.6.10",
     "vue-class-component": "^7.1.0",
-    "vue-property-decorator": "^8.1.0"
+    "vue-property-decorator": "^8.1.0",
+    "vue-simple-alert": "1.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.0",

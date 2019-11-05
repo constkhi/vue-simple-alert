@@ -6,9 +6,9 @@ import Swal, {
 } from "sweetalert2";
 
 export class VueSimpleAlert {
-  static globalOptions: SweetAlertOptions;
+  public static globalOptions: SweetAlertOptions;
 
-  static alert(
+  public static alert(
     message?: string,
     title?: string,
     type?: SweetAlertType,
@@ -33,7 +33,7 @@ export class VueSimpleAlert {
     });
   }
 
-  static confirm(
+  public static confirm(
     message?: string,
     title?: string,
     type?: SweetAlertType,
@@ -60,7 +60,7 @@ export class VueSimpleAlert {
     });
   }
 
-  static prompt(
+  public static prompt(
     message: string,
     defaultText?: string,
     title?: string,
@@ -92,7 +92,7 @@ export class VueSimpleAlert {
     });
   }
 
-  static fire(options: SweetAlertOptions): Promise<SweetAlertResult> {
+  public static fire(options: SweetAlertOptions): Promise<SweetAlertResult> {
     return Swal.fire(options);
   }
 

@@ -1,11 +1,18 @@
 <template>
   <div id="app">
+    <GithubRibbon url="https://github.com/constkhi/vue-simple-alert" />
+
     <header id="header">
-      <img id="logo" alt="Vue logo" src="./assets/logo.png" />
-      <h1>
-        vue-simple-alert examples
-        <small>({{ v }})</small>
-      </h1>
+      <div id="logo">
+        <img id="logo-image" alt="Vue logo" src="./assets/logo.png" />
+      </div>
+      <div id="title">
+        <h1>
+          vue-simple-alert examples
+          <small>({{ v }})</small>
+          <h3>({{ des }})</h3>
+        </h1>
+      </div>
     </header>
     <h2>Alert examples</h2>
     <div id="examples">
@@ -127,11 +134,15 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { SweetAlertOptions, SweetAlertResult } from "sweetalert2";
-import { version } from "vue-simple-alert/package.json";
+import { version, description } from "vue-simple-alert/package.json";
+import GithubRibbon from "@/components/GithubRibbon.vue";
 
-@Component
+@Component({
+  components: { GithubRibbon }
+})
 export default class App extends Vue {
   readonly v: string = version;
+  readonly des: string = description;
 
   alertExample0() {
     window.alert("This is normal alert.");
@@ -310,14 +321,21 @@ body {
 
 h1 {
   font-weight: 500;
-  font-size: 3em;
+  font-size: 3rem;
 }
 h1 small {
-  font-size: 0.5em;
+  font-size: 1.25rem;
 }
 
 h2 {
   font-weight: 500;
+  font-size: 2rem;
   margin: 0 0 10px;
+}
+
+h3 {
+  font-weight: 200;
+  font-size: 1.5rem;
+  text-align: left;
 }
 </style>
