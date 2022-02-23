@@ -68,7 +68,7 @@ this.$confirm("Are you sure?").then(() => {
 // in any component
 
 this.$prompt("Input your name").then(text => {
-  // do somthing with text
+  // do something with text
 });
 ```
 
@@ -76,7 +76,7 @@ this.$prompt("Input your name").then(text => {
 
 ### Global options
 
-Global options can be set when initialize plugin. Refer to [sweetalert2 documentation](https://sweetalert2.github.io/#configuration)
+Global options can be set when initializing plugin. Refer to [sweetalert2 documentation](https://sweetalert2.github.io/#configuration)
 
 ```javascript
 // main.js
@@ -152,7 +152,7 @@ The confirm() method displays a dialog box with a specified message, along with 
 
 - returns: Promise\<boolean\>
 
-> Will be resolved when OK button clicked. If confirm box closed by any other reason, this promise will be rejected.
+> Will be resolved when OK button was clicked. If the confirm box was closed by any other reason, this promise will be rejected.
 
 ### prompt(message, defaultText?, title?, type?, options?)
 
@@ -180,7 +180,7 @@ The prompt() method displays a dialog box that prompts the user for input.
 
 - returns: Promise\<string\>
 
-> Will be resolved with input text when OK button clicked. If the user clicks OK without entering any text, promise will be resolved with an empty string. If dialog box closed by any other reason, this promise will be rejected.
+> Will be resolved with input text when the OK button was clicked. If the user clicks OK without entering any text, the promise will be resolved with an empty string. If the dialog box was closed by any other reason, this promise will be rejected.
 
 ## Versioning
 
